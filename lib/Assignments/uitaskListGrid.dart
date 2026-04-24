@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class StdApp extends StatelessWidget {
-  const StdApp({super.key});
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: StudentUI(),
+  ));
+}
 
+class StudentUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,6 +15,8 @@ class StdApp extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
+            /// 🔷 HEADER
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(20),
@@ -37,141 +44,144 @@ class StdApp extends StatelessWidget {
                 ],
               ),
             ),
+
             SizedBox(height: 15),
+
+            /// 📊 STATS
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  width: 150,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    children: [
-                      Text("8",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 5),
-                      Text("Active Courses"),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 150,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.purple.shade100,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    children: [
-                      Text("3.8",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 5),
-                      Text("CGPA"),
-                    ],
-                  ),
-                ),
+                statCard("8", "Active Courses", Colors.grey[300]!),
+                statCard("3.8", "CGPA", Colors.purple[100]!),
               ],
             ),
+
             SizedBox(height: 20),
-            Text("Announcements",
+
+            /// 📢 ANNOUNCEMENTS
+            Text("📢 Announcements",
                 style: TextStyle(fontWeight: FontWeight.bold)),
+
             SizedBox(height: 10),
-            Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  Text("Exam Schedule Released",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("Mid-semester exams start next week"),
-                  Text("2 hours ago",
-                      style: TextStyle(color: Colors.grey)),
-                ],
-              ),
+
+            announcementCard(
+              "Exam Schedule Released",
+              "Mid-semester exams start next week.",
+              "2 hours ago",
+              Colors.blue,
             ),
-            Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  Text("Assignment Due Tomorrow",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("Submit before 11:59 PM"),
-                  Text("5 hours ago",
-                      style: TextStyle(color: Colors.grey)),
-                ],
-              ),
+
+            announcementCard(
+              "Assignment 3 Due Tomorrow",
+              "Submit before 11:59 PM.",
+              "5 hours ago",
+              Colors.purple,
             ),
+
+            announcementCard(
+              "Grades Posted",
+              "Final grades available.",
+              "1 day ago",
+              Colors.teal,
+            ),
+
             SizedBox(height: 20),
-            Text("My Courses",
+
+            /// 📚 COURSES
+            Text("📚 My Courses",
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(10),
+              childAspectRatio: 1.4,
               children: [
-                Container(
-                  margin: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Text("Data Structures",
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.pink,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Text("Web Development",
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Text("Database Design",
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Text("Algorithms",
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                ),
+                courseCard("Data Structures", "CS 201", "75%", Colors.blue),
+                courseCard("Web Development", "CS 301", "90%", Colors.pink),
+                courseCard("Database Design", "CS 251", "60%", Colors.cyan),
+                courseCard("Algorithms", "CS 203", "85%", Colors.orange),
+                courseCard("Machine Learning", "CS 401", "70%", Colors.indigo),
+                courseCard("Mobile Apps", "CS 305", "80%", Colors.grey),
               ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget statCard(String value, String title, Color color) {
+    return Container(
+      width: 150,
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: [
+          Text(value,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          SizedBox(height: 5),
+          Text(title),
+        ],
+      ),
+    );
+  }
+
+  Widget announcementCard(
+      String title, String subtitle, String time, Color color) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border(left: BorderSide(color: color, width: 4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(subtitle),
+          SizedBox(height: 5),
+          Text(time, style: TextStyle(color: Colors.grey, fontSize: 12)),
+        ],
+      ),
+    );
+  }
+
+  Widget courseCard(
+      String name, String code, String progress, Color color) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [color.withOpacity(0.7), color],
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(name,
+              style:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Text(code, style: TextStyle(color: Colors.white70)),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.white24,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text("Progress: $progress",
+                style: TextStyle(color: Colors.white)),
+          )
+        ],
       ),
     );
   }
