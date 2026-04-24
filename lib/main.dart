@@ -5,5 +5,5 @@ import 'Assignments/stackCCard.dart';
 import 'Assignments/uitaskListGrid.dart';
 
 void main() => runApp(
-  MaterialApp(debugShowCheckedModeBanner: false, home: StudentUI()),
+  MaterialApp(debugShowCheckedModeBanner: false, home: MonthListPage()),
 );
